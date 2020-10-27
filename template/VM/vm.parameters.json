@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceLocation": {
+            "value": "eastus"
+        },
+        "vmName": {
+            "value": "unreal.vm1"
+        },
+        "vnetName": {
+            "value": "unreal.vnet"
+        },
+        "osType": {
+            "value": "Ubuntu"
+        },
+        "osVersion": {
+            "value": "18.04-LTS"
+        },
+        "sshKey": {
+            "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDp9dTwKQi+lcwO8zSDg7GKOh0u0YeuQxPcRKf+zOOME+LJ6tFaB291tob7drlTVBW8Grit/kNMFzUMftgeF24KB8n71+/Uv2ez5HGngifKp2luQqwR6hg2yGZXNra3tICqnN4pS/+b1JEPlUkZW/fqVj41IyrA4f/2KFDICfy83iCVGgP5a4EkE4QOsNabZkLjuDdtPECkpHVEmIAkD6Zo78uYyTM+xsnj/IUbhi03fYhwyRUfHrTJLEtC4wDluEfx2eNzW6uS7yE3CvxbZMwgnrqhfybm+pGArNHFin+DyvSj4vdE2u0fY7VcBQS958GTtZqs1hpjQwtdpg6xoaHu4rmwmUNK4csUofaVS4cCg7K2eCFsuapDEovDZI2qF1VvSeIqM7o2czrozuINat720zP6jYnZ9PkWUJOReX60ndFUU+eelAD+7kUQ4ZvqF2hf95UJwkc06tnfU6nIItjh8whhvbqId2L+Ybq4M+BybJxMCua+slWGq78okwOpDrk= shubham@lyderx"
+        }
+    }
+}

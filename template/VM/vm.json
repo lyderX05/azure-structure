@@ -1,0 +1,124 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "resourceLocation": {
+            "type": "string",
+            "defaultValue": "eastus",
+            "metadata": {
+                "description": "New Resources Location"
+            }
+        },
+        "vmName": {
+            "type": "string",
+            "metadata": {
+                "description": "Azure Virtual machine Name"
+            }
+        },
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_B2s",
+            "metadata": {
+                "description": "Azure Virtual machine Name"
+            }
+        },
+        "vnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "Azure Virtual Networks Name"
+            }
+        },
+        "osType": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "osVersion": {
+            "type": "string",
+            "metadata": {
+                "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
+            }
+        },
+        "sshKey": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Authentication Key"
+            }
+        },
+        "adminUser": {
+            "type": "string",
+            "metadata": {
+                "description": "Admin User Key"
+            }
+        },
+        "addressPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.20/16",
+            "metadata": {
+                "description": "description"
+            }
+        }
+
+    },
+    "resources": [
+        // Virtual Networks 
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2015-06-15",
+            "name": "[parameters('vnetName')]",
+            "location": "[parameters('resourceLocation')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": "[parameters('addressPrefix')]"
+                }
+            },
+            "resources": [
+                {
+                    "type": "subnets",
+                    "apiVersion": "2015-06-15",
+                    "name": "[concat(parameters('vnetName'), '_subnet1')]",
+                    "location": "[parameters('resourceLocation')]",
+                    "dependsOn": [
+                        "[parameters('vnetName')]"
+                    ],
+                    "properties" :{
+                        "addressPrefix": "10.0.1.0/24"
+                    }
+                }
+            ]
+        },
+        // Virtual Machine CALL
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2015-06-15",
+            "name": "[parameters('vmName')]",
+            "location": "[parameters('resourceLocation')]",
+            "properties": {
+                "osProfile": {
+                    "linuxConfiguration": {
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "[concat('/home', parameters('adminUser'), '.ssh/authorized_keys')]",
+                                    "keyData": "[parameters('sshKey')]"
+                                }
+                            ]
+                        }
+                    }
+
+                },
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                },
+                "storageProfile" : {
+                    ""
+                }
+                
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]"
+            ]
+        }
+    ]
+}
